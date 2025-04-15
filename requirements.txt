@@ -2,7 +2,7 @@ streamlit
 geopandas
 shapely
 pyproj
-fiona
+folium
 pandas
 numpy
 matplotlib
