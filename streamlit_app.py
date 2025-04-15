@@ -10,6 +10,8 @@ from folium.features import GeoJsonTooltip
 import plotly.graph_objs as go
 import altair as alt
 import plotly.express as px
+import gdown
+import os
 
 # Page configuration
 st.set_page_config(
@@ -20,9 +22,13 @@ st.set_page_config(
 
 alt.themes.enable("dark")
 
+# Cek apakah file sudah ada
+if not os.path.exists("major-crime-indicators.csv"):
+    file_id = "1Yda-fY9I60L_dAUha5Fk31iUC-sB_GGz"
+    url = f"https://drive.google.com/uc?id={file_id}"
+    gdown.download(url, "major-crime-indicators.csv", quiet=False)
 # Load data
-url = "https://drive.google.com/uc?export=download&id=1Yda-fY9I60L_dAUha5Fk31iUC-sB_GGz"
-df_crime = pd.read_csv(url)
+df_crime = pd.read_csv("major-crime-indicators.csv")
 geo_df = gpd.read_file('toronto_neighborhoods140.geojson')
 
 # Plots
