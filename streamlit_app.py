@@ -21,7 +21,8 @@ st.set_page_config(
 alt.themes.enable("dark")
 
 # Load data
-df_crime = pd.read_csv('major-crime-indicators.csv')
+url = "https://drive.google.com/uc?export=download&id=1Yda-fY9I60L_dAUha5Fk31iUC-sB_GGz"
+df_crime = pd.read_csv(url)
 geo_df = gpd.read_file('toronto_neighborhoods140.geojson')
 
 # Plots
