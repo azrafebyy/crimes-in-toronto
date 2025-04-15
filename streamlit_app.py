@@ -325,9 +325,6 @@ def maps(df, gdf):
 st.title("📊 Kejahatan di Toronto")
 st.markdown("Visualisai chart berdasarkan data Crimes in Toronto di Kaggle.")
 
-st.write("Columns in df_crime:")
-st.write(df_crime.columns.tolist())
-
 col1, col2 = st.columns(2)
 
 with col1:
