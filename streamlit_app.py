@@ -169,7 +169,7 @@ def line_ch(df_crime):
     ))
 
     fig.update_layout(
-        xaxis_title='Hari dalam Bulan',
+        xaxis_title='Tanggal',
         yaxis_title='Banyaknya Kejadian Kriminal',
         template='plotly_dark',  # agar cocok dengan tema gelap
         width=900,
@@ -362,10 +362,20 @@ st.markdown(
     """
     <hr style="margin-top: 3rem; margin-bottom: 1rem; border-top: 1px solid #BBB;" />
 
-    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 15px; color: gray;">
-        <div><strong>👥 Kelompok 7:</strong> Azra Feby, Diva Sanjaya, Farah Saraswati, Nasywa Alif</div>
-        <div><strong>📊 Tugas Besar UTS Visualisasi Data:</strong> Dashboard Kejahatan di Toronto</div>
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; font-size: 15px; color: gray; gap: 2rem;">
+        <div style="max-width: 60%;">
+            <strong>👥 Kelompok 7:</strong> 1. Azra Feby Awfiyah – 13101223300<br>
+            <div style="margin-left: 107px;">
+                2. Diva Sanjaya Wardani – 1301223167<br>
+                3. Farah Saraswati – 1301223401<br>
+                4. Nasywa Alif Widyasari – 1301223357
+            </div>
+        </div>
+        <div style="text-align: right;">
+            <strong>📊 Tugas Besar UTS Visualisasi Data:</strong> Dashboard Kejahatan di Toronto
+        </div>
     </div>
     """,
     unsafe_allow_html=True
 )
+
