@@ -31,11 +31,7 @@ if not os.path.exists("major-crime-indicators.csv"):
 df_crime = pd.read_csv("major-crime-indicators.csv")
 geo_df = gpd.read_file('toronto_neighborhoods140.geojson')
 
-# --- Preprocessing ---
-# Tampilkan jumlah missing values sebelum
-st.write("Jumlah nilai yang hilang sebelum preprocessing:")
-st.write(df_crime.isnull().sum())
-
+# Preprocessing
 # Hapus baris yang memiliki nilai kosong
 df_crime = df_crime.dropna()
 
@@ -49,12 +45,6 @@ df_crime = df_crime[
 
 # Hapus duplikasi
 df_crime = df_crime.drop_duplicates()
-
-# Tampilkan info setelah preprocessing
-st.write("Jumlah nilai yang hilang setelah preprocessing:")
-st.write(df_crime.isnull().sum())
-
-st.write("Jumlah data setelah preprocessing:", len(df_crime))
 
 # Plots
 def bubble(df):
