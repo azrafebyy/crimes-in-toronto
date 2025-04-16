@@ -32,50 +32,60 @@ df_crime = pd.read_csv("major-crime-indicators.csv")
 geo_df = gpd.read_file('toronto_neighborhoods140.geojson')
 
 # Plots
-
-def bubble(df_crime):
-    category_counts = df_crime['MCI_CATEGORY'].value_counts()
-
+def bubble(df):
+    category_counts = df['MCI_CATEGORY'].value_counts()
     categories = category_counts.index.tolist()
     counts = category_counts.values.tolist()
 
-    ranking = category_counts.rank(method='min', ascending=False).to_dict()
+    plot_data = pd.DataFrame({
+        'Category': categories,
+        'Count': counts,
+        'Size': [count * 5 for count in counts],
+        'X': [i * 0.8 for i in range(len(categories))],
+        'Y': [1] * len(categories)
+    })
 
-    num_cats = len(categories)
-    step = (1.0 - 0.3) / (num_cats - 1) if num_cats > 1 else 0
-    rank_to_color_value = {
-        rank: 1.0 - ((rank - 1) * step)
-        for rank in range(1, num_cats + 1)
-    }
+    fig = px.scatter(
+        plot_data,
+        x='X',
+        y='Y',
+        size='Size',
+        color='Count',
+        hover_data={
+            'X': False,
+            'Y': False,
+            'Category': False,
+            'Count': False
+        },
+        custom_data=['Category', 'Count'],
+        color_continuous_scale='Reds',
+        size_max=180
+    )
 
-    colors = [cm.Reds(rank_to_color_value[ranking[cat]]) for cat in categories]
+    fig.update_layout(
+        xaxis=dict(
+            tickmode='array',
+            tickvals=plot_data['X'],
+            ticktext=plot_data['Category'],
+            showgrid=False,
+            tickfont=dict(size=12)
+        ),
+        yaxis=dict(showticklabels=False),
+        xaxis_title='',
+        yaxis_title='',
+        showlegend=False,
+        width=800,
+        height=400,
+        coloraxis_colorbar=dict(title='Total Crimes')
+    )
 
-    fig, ax = plt.subplots(figsize=(7, 3), facecolor='#242424')
-    ax.set_facecolor('#242424')
+    fig.update_traces(
+        marker=dict(line=dict(width=1, color='grey')),
+        hovertemplate="<b>Kategori:</b> %{customdata[0]}<br><b>Jumlah:</b> %{customdata[1]}<extra></extra>",
+        mode='markers+text',
+    )
 
-    x = range(len(categories))
-    sizes = [count * 0.5 for count in counts]
-
-    ax.scatter(x, [1]*len(categories), s=sizes, c=colors, alpha=0.8, edgecolors='grey', linewidths=1)
-
-    for i, (cat, count) in enumerate(zip(categories, counts)):
-        ax.text(x[i], 1, f"{cat}\n{count}", ha='center', va='bottom', fontsize=9)
-
-    ax.set_xticks([])
-    ax.set_yticks([])
-
-    # Hilangkan semua spines (bingkai)
-    for spine in ax.spines.values():
-        spine.set_visible(False)
-    ax.title.set_color('white')
-    ax.xaxis.label.set_color('white')
-    ax.yaxis.label.set_color('white')
-    ax.tick_params(axis='both', colors='white')
-    for text in ax.texts:
-        text.set_color('white')
-    
-    plt.tight_layout()
-    st.pyplot(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
 def bar_hor(df):
     premises_counts = df['PREMISES_TYPE'].value_counts()
@@ -106,7 +116,7 @@ def bar_hor(df):
     )
 
     fig = go.Figure(data=[bar], layout=layout)
-    fig.update_layout(width=800, height=350)
+    fig.update_layout(width=800, height=400)
     st.plotly_chart(fig, use_container_width=True)
 
 def pie_ch(df):
