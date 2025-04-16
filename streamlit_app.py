@@ -31,6 +31,19 @@ if not os.path.exists("major-crime-indicators.csv"):
 df_crime = pd.read_csv("major-crime-indicators.csv")
 geo_df = gpd.read_file('toronto_neighborhoods140.geojson')
 
+# Preprocessing
+# Hapus baris yang memiliki nilai kosong
+df_crime = df_crime.dropna()
+# Hapus baris yang mengandung kode 'NSA' pada kolom terkait
+df_crime = df_crime[
+    (df_crime['HOOD_158'] != 'NSA') &
+    (df_crime['NEIGHBOURHOOD_158'] != 'NSA') &
+    (df_crime['HOOD_140'] != 'NSA') &
+    (df_crime['NEIGHBOURHOOD_140'] != 'NSA')
+]
+# Hapus duplikasi
+df_crime = df_crime.drop_duplicates()
+
 # Plots
 def bubble(df):
     category_counts = df['MCI_CATEGORY'].value_counts()
