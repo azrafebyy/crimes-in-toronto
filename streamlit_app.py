@@ -348,7 +348,7 @@ def maps(df, gdf):
 
 # ========== MAIN CONTENT ==========
 st.title("📊 Kejahatan di Toronto")
-st.markdown("Visualisai chart berdasarkan data Crimes in Toronto di Kaggle.")
+st.markdown("Visualisasi chart berdasarkan data Crimes in Toronto di Kaggle.")
 
 col1, col2 = st.columns(2)
 
